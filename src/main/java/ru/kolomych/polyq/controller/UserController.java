@@ -19,7 +19,7 @@ import ru.kolomych.polyq.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 public class UserController {
 
     private final UserService userService;
@@ -31,17 +31,17 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<UserDTO> getUsers() {
         return userService.getUsers().stream().map(this::convertToUserDTO).toList();
     }
 
-    @GetMapping("/user")
+    @GetMapping
     public UserDTO getUser(@RequestParam("username") String username) {
         return convertToUserDTO(userService.findUserByUsername(username));
     }
 
-    @PostMapping("/user")
+    @PostMapping
     public ResponseEntity<HttpStatus> createUser(@RequestBody UserDTO userDTO) {
         User user = convertToUser(userDTO);
         userService.saveUser(user);
@@ -49,7 +49,7 @@ public class UserController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/multiple")
     public ResponseEntity<HttpStatus> createUsers(@RequestBody List<UserDTO> userDTOList) {
         for (UserDTO userDTO : userDTOList) {
             userService.saveUser(convertToUser(userDTO));
