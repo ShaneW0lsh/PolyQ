@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kolomych.polyq.model.Role;
 import ru.kolomych.polyq.repository.RoleRepository;
-import ru.kolomych.polyq.util.RoleNotFoundException;
+import ru.kolomych.polyq.util.NotFoundException;
 
 import java.util.List;
 
@@ -25,8 +25,8 @@ public class RoleService {
     }
 
     @Transactional(readOnly = true)
-    public Role getRoleByName(String name) throws RoleNotFoundException {
+    public Role getRoleByName(String name) throws NotFoundException {
         return roleRepository.getRoleByName(name).orElseThrow(() ->
-                new RoleNotFoundException(String.format("Role with name %s does not exist", name)));
+                new NotFoundException(String.format("Role with name %s does not exist", name)));
     }
 }

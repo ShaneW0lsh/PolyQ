@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler
-    private ResponseEntity<String> handleUserException(UserNotFoundException userNotCreatedException) {
-        return new ResponseEntity<>(userNotCreatedException.getMessage(), HttpStatus.NOT_FOUND);
+    private ResponseEntity<String> handleException(NotFoundException notFoundException) {
+        return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

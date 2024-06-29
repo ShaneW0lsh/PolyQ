@@ -6,8 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kolomych.polyq.model.Role;
 import ru.kolomych.polyq.model.User;
 import ru.kolomych.polyq.repository.UserRepository;
-import ru.kolomych.polyq.util.RoleNotFoundException;
-import ru.kolomych.polyq.util.UserNotFoundException;
+import ru.kolomych.polyq.util.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +30,13 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public User findUserByUsername(String username) throws UserNotFoundException {
+    public User findUserByUsername(String username) throws NotFoundException {
         return userRepository.findByUsername(username).orElseThrow(() ->
-                new UserNotFoundException("User with this username was not found!"));
+                new NotFoundException("User with this username was not found!"));
     }
 
     @Transactional
-    public void saveUser(User user) throws RoleNotFoundException {
+    public void saveUser(User user) throws NotFoundException {
         Optional<User> oldUser = userRepository.findByUsername(user.getUsername());
         oldUser.ifPresent(value -> user.setId(value.getId()));
 
@@ -51,7 +50,7 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteUser(String username) throws UserNotFoundException {
+    public void deleteUser(String username) throws NotFoundException {
         User user = findUserByUsername(username);
         userRepository.delete(user);
     }
