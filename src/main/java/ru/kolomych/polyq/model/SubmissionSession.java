@@ -11,7 +11,7 @@ import java.util.Collection;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table("submission_session")
+@Table(name = "submission_session")
 @Entity
 public class SubmissionSession {
 
@@ -21,7 +21,7 @@ public class SubmissionSession {
 
     private String discipline;
 
-    @Column("date_and_time")
+    @Column(name = "date_and_time")
     private LocalDateTime dateAndTime;
 
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
