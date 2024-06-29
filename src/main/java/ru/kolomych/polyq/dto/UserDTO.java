@@ -4,7 +4,6 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.kolomych.polyq.model.Role;
 
 import java.util.Collection;
 

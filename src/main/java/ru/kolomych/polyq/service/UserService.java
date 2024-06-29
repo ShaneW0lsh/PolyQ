@@ -32,7 +32,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public User findUserByUsername(String username) throws NotFoundException {
         return userRepository.findByUsername(username).orElseThrow(() ->
-                new NotFoundException("User with this username was not found!"));
+                new NotFoundException(String.format("User with \"username\" %s was not found", username)));
     }
 
     @Transactional
