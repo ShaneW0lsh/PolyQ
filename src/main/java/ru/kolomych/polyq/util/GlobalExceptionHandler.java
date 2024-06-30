@@ -12,4 +12,9 @@ public class GlobalExceptionHandler {
     private ResponseEntity<String> handleException(NotFoundException notFoundException) {
         return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler
+    private ResponseEntity<String> handleException(BadRequestException badRequestException) {
+        return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }
