@@ -2,7 +2,6 @@ package ru.kolomych.polyq.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
