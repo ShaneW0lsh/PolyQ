@@ -3,7 +3,6 @@ package ru.kolomych.polyq.controller;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.server.authorization.HttpStatusServerAccessDeniedHandler;
 import org.springframework.web.bind.annotation.*;
 import ru.kolomych.polyq.dto.SubmissionSessionDTO;
 import ru.kolomych.polyq.model.SubmissionSession;
@@ -45,6 +44,13 @@ public class SubmissionSessionController {
     @PatchMapping
     public ResponseEntity<HttpStatus> updateSubmissionSession(@RequestBody SubmissionSessionDTO submissionSessionDTO) {
         submissionSessionService.updateSubmissionSession(convertToSubmissionSession(submissionSessionDTO));
+
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteSubmissionSession(@RequestParam("id") Long id) {
+        submissionSessionService.deleteSubmissionSession(id);
 
         return ResponseEntity.ok(HttpStatus.OK);
     }

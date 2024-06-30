@@ -20,6 +20,8 @@ public class SubmissionSessionService {
     private final SubmissionSessionRepository submissionSessionRepository;
     private final TeacherRepository teacherRepository;
 
+    private final String SUBMISSION_SESSION_NOT_FOUND = "SubmissionSession with \"id\" = %d was not found!";
+
     @Autowired
     public SubmissionSessionService(SubmissionSessionRepository submissionSessionRepository, TeacherRepository teacherRepository) {
         this.submissionSessionRepository = submissionSessionRepository;
@@ -34,27 +36,31 @@ public class SubmissionSessionService {
     @Transactional(readOnly = true)
     public SubmissionSession getSubmissionSession(Long id) throws NotFoundException {
         return submissionSessionRepository.findById(id).orElseThrow(() ->
-                new NotFoundException(String.format("SubmissionSession with \"id\" %d was not found", id)));
+                new NotFoundException(String.format(SUBMISSION_SESSION_NOT_FOUND, id)));
     }
 
     // If teacher in submissionSession has an id, new teacher with this name should not be added to DB, rather it should be used instead
     // If teacher does not have an id, it means it is not in DB yet => add it to DB
     @Transactional
     public void createSubmissionSession(SubmissionSession submissionSession) {
+        List<Teacher> existingTeachers = getExistingTeachers(submissionSession);
+        submissionSession.setTeachers(existingTeachers);
+        submissionSessionRepository.save(submissionSession);
+    }
+
+    private List<Teacher> getExistingTeachers(SubmissionSession submissionSession) {
         List<Teacher> existingTeachers = new ArrayList<>();
         for (Teacher teacher : submissionSession.getTeachers()) {
-            Optional<Teacher> oldTeacher = teacherRepository.findByFullName(teacher.getLastName() + ' ' + teacher.getFirstName() + ' ' + teacher.getMiddleName());
+            Optional<Teacher> oldTeacher = teacherRepository.findByFullName(
+                    teacher.getLastName() + ' ' + teacher.getFirstName() + ' ' + teacher.getMiddleName()
+            );
             oldTeacher.ifPresentOrElse(
                     existingTeachers::add,
                     () -> existingTeachers.add(teacher)
             );
         }
-        submissionSession.setTeachers(existingTeachers);
-        submissionSessionRepository.save(submissionSession);
+        return existingTeachers;
     }
-
-    // TODO: create a separate service for mapping submissionession to teachers,
-    //  because right now update doesn't work like it's supposed to do with teachers
 
     @Transactional
     public void updateSubmissionSession(SubmissionSession submissionSession) {
@@ -73,13 +79,28 @@ public class SubmissionSessionService {
                         submissionSession.setDateAndTime(value.getDateAndTime());
                     if (submissionSession.getTeachers() == null)
                         submissionSession.setTeachers(value.getTeachers());
+                    else
+                        submissionSession.setTeachers(getExistingTeachers(submissionSession));
                 },
                 () -> {
                     throw new NotFoundException(
-                            String.format("SubmissionSession with \"id\" = %d was not found", id)
+                            String.format(SUBMISSION_SESSION_NOT_FOUND, id)
                     );
                 }
         );
         submissionSessionRepository.save(submissionSession);
+    }
+
+    @Transactional
+    public void deleteSubmissionSession(Long id) {
+        Optional<SubmissionSession> submissionSession = submissionSessionRepository.findById(id);
+        submissionSession.ifPresentOrElse(
+                value -> submissionSessionRepository.deleteById(id),
+                () -> {
+                    throw new NotFoundException(
+                            String.format(SUBMISSION_SESSION_NOT_FOUND, id)
+                    );
+                }
+        );
     }
 }

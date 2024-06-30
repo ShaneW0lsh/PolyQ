@@ -1,7 +1,6 @@
 package ru.kolomych.polyq.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +13,6 @@ import java.util.Collection;
 @NoArgsConstructor
 public class SubmissionSessionDTO {
 
-    @NotNull
     private Long id;
 
     private String discipline;
