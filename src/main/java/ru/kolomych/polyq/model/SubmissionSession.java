@@ -1,8 +1,18 @@
 package ru.kolomych.polyq.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -10,7 +20,6 @@ import java.util.Collection;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Table(name = "submission_session")
 @Entity
 public class SubmissionSession {
@@ -30,4 +39,7 @@ public class SubmissionSession {
             inverseJoinColumns = @JoinColumn(name = "submission_session_id")
     )
     private Collection<Teacher> teachers;
+
+    @OneToMany(mappedBy = "submissionSession", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<Queue> queues;
 }

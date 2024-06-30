@@ -3,6 +3,7 @@ package ru.kolomych.polyq.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kolomych.polyq.model.Queue;
 import ru.kolomych.polyq.model.SubmissionSession;
 import ru.kolomych.polyq.model.Teacher;
 import ru.kolomych.polyq.repository.SubmissionSessionRepository;
@@ -42,10 +43,21 @@ public class SubmissionSessionService {
     // If teacher in submissionSession has an id, new teacher with this name should not be added to DB, rather it should be used instead
     // If teacher does not have an id, it means it is not in DB yet => add it to DB
     @Transactional
-    public void createSubmissionSession(SubmissionSession submissionSession) {
+    public SubmissionSession createSubmissionSession(SubmissionSession submissionSession) {
         List<Teacher> existingTeachers = getExistingTeachers(submissionSession);
         submissionSession.setTeachers(existingTeachers);
+
+        List<Queue> queues = new ArrayList<>();
+        for (Teacher teacher : submissionSession.getTeachers()) {
+            Queue queue = new Queue();
+            queue.setSubmissionSession(submissionSession);
+            queue.setTeacher(teacher);
+            queues.add(queue);
+        }
+        submissionSession.setQueues(queues);
+
         submissionSessionRepository.save(submissionSession);
+        return submissionSession;
     }
 
     private List<Teacher> getExistingTeachers(SubmissionSession submissionSession) {

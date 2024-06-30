@@ -4,7 +4,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.kolomych.polyq.dto.QueueDTO;
 import ru.kolomych.polyq.dto.SubmissionSessionDTO;
+import ru.kolomych.polyq.model.Queue;
 import ru.kolomych.polyq.model.SubmissionSession;
 import ru.kolomych.polyq.service.SubmissionSessionService;
 
@@ -34,11 +36,12 @@ public class SubmissionSessionController {
         return convertToSubmissionSessionDTO(submissionSessionService.getSubmissionSession(id));
     }
 
-    @PostMapping
-    public ResponseEntity<HttpStatus> createSubmissionSession(@RequestBody SubmissionSessionDTO submissionSessionDTO) {
-        submissionSessionService.createSubmissionSession(convertToSubmissionSession(submissionSessionDTO));
+//    @GetMapping("/queue")
 
-        return ResponseEntity.ok(HttpStatus.OK);
+    @PostMapping
+    public List<QueueDTO> createSubmissionSession(@RequestBody SubmissionSessionDTO submissionSessionDTO) {
+        SubmissionSession submissionSession = submissionSessionService.createSubmissionSession(convertToSubmissionSession(submissionSessionDTO));
+        return submissionSession.getQueues().stream().map(this::convertToQueueDTO).toList();
     }
 
     @PatchMapping
@@ -61,5 +64,9 @@ public class SubmissionSessionController {
 
     private SubmissionSession convertToSubmissionSession(SubmissionSessionDTO submissionSessionDTO) {
         return modelMapper.map(submissionSessionDTO, SubmissionSession.class);
+    }
+
+    private QueueDTO convertToQueueDTO(Queue queue) {
+        return modelMapper.map(queue, QueueDTO.class);
     }
 }

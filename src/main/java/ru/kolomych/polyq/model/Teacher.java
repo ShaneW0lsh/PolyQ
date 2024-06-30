@@ -2,12 +2,10 @@ package ru.kolomych.polyq.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Table(name = "teacher")
 @Entity
 public class Teacher {

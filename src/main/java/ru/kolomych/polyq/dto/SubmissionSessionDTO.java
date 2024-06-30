@@ -20,4 +20,6 @@ public class SubmissionSessionDTO {
     private LocalDateTime dateAndTime;
 
     private Collection<TeacherDTO> teachers;
+
+    private Collection<QueueDTO> queues;
 }
