@@ -10,7 +10,6 @@ import java.util.Collection;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class SubmissionSessionDTO {
 
     private Long id;

@@ -7,7 +7,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class TeacherDTO {
 
     @JsonAlias("first_name")
