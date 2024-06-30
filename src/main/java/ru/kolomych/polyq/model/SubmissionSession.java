@@ -24,7 +24,7 @@ public class SubmissionSession {
     @Column(name = "date_and_time")
     private LocalDateTime dateAndTime;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(name = "submission_session_teacher",
             joinColumns = @JoinColumn(name = "teacher_id"),
             inverseJoinColumns = @JoinColumn(name = "submission_session_id")
