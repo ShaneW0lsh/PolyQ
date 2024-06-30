@@ -10,8 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TeacherDTO {
 
-    private Long id;
-
     @JsonAlias("first_name")
     private String firstName;
 
