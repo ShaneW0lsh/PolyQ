@@ -47,6 +47,13 @@ public class SubmissionSessionService {
         List<Teacher> existingTeachers = getExistingTeachers(submissionSession);
         submissionSession.setTeachers(existingTeachers);
 
+        createQueues(submissionSession);
+
+        submissionSessionRepository.save(submissionSession);
+        return submissionSession;
+    }
+
+    private void createQueues(SubmissionSession submissionSession) {
         List<Queue> queues = new ArrayList<>();
         for (Teacher teacher : submissionSession.getTeachers()) {
             Queue queue = new Queue();
@@ -55,9 +62,6 @@ public class SubmissionSessionService {
             queues.add(queue);
         }
         submissionSession.setQueues(queues);
-
-        submissionSessionRepository.save(submissionSession);
-        return submissionSession;
     }
 
     private List<Teacher> getExistingTeachers(SubmissionSession submissionSession) {
@@ -91,8 +95,10 @@ public class SubmissionSessionService {
                         submissionSession.setDateAndTime(value.getDateAndTime());
                     if (submissionSession.getTeachers() == null)
                         submissionSession.setTeachers(value.getTeachers());
-                    else
+                    else {
                         submissionSession.setTeachers(getExistingTeachers(submissionSession));
+                        createQueues(submissionSession);
+                    }
                 },
                 () -> {
                     throw new NotFoundException(
