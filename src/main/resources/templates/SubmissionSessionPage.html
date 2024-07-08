@@ -3,8 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Submission Session Page</title>
+
+    <link rel="stylesheet" href="/css/styles.css"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}"/>
+    <script src="/webjars/jquery/3.7.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+    <script src="/js/mainScript.js"></script>
 </head>
 <body>
-    <h1>Submission Session</h1>
+    <div class="container">
+        <h1 class="text-center mt-5">Submission Sessions</h1>
+        <div id="submission-session-container" class="d-flex flex-wrap justify-content-center mt-5 submission-sessions">
+            <div class="m-2">
+                <button type="button" class="btn btn-primary btn-lg btn-block submission-session-button">Session 1</button>
+            </div>
+            <div class="m-2">
+                <button type="button" class="btn btn-primary btn-lg btn-block submission-session-button">Session 2</button>
+            </div>
+            <div class="m-2">
+                <button type="button" class="btn btn-primary btn-lg btn-block submission-session-button">Session 3</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

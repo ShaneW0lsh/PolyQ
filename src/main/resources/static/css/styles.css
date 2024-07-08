@@ -1,0 +1,7 @@
+.submission-sessions {
+    flex-direction: column;
+    align-items: center;
+}
+.submission-session-button {
+    width: 100%;
+}
