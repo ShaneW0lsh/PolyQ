@@ -19,7 +19,7 @@ import ru.kolomych.polyq.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 public class UserController {
 
     private final UserService userService;
@@ -32,43 +32,32 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public List<UserDTO> getUsers() {
-        return userService.getUsers().stream().map(this::convertToUserDTO).toList();
+    public List<UserDTO> getAll() {
+        return userService.findAll().stream().map(this::convertToUserDTO).toList();
     }
 
     @GetMapping
-    public UserDTO getUser(@RequestParam("username") String username) {
-        return convertToUserDTO(userService.findUserByUsername(username));
+    public UserDTO get(@RequestParam("username") String username) {
+        return convertToUserDTO(userService.find(username));
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> createUser(@RequestBody UserDTO userDTO) {
-        User user = convertToUser(userDTO);
-        userService.saveUser(user);
+    public ResponseEntity<HttpStatus> create(@RequestBody UserDTO userDTO) {
+        userService.create(convertToUser(userDTO));
 
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @PostMapping("/multiple")
-    public ResponseEntity<HttpStatus> createUsers(@RequestBody List<UserDTO> userDTOList) {
-        for (UserDTO userDTO : userDTOList) {
-            userService.saveUser(convertToUser(userDTO));
-        }
-
-        return ResponseEntity.ok(HttpStatus.OK);
-    }
-
-    @PatchMapping()
-    public ResponseEntity<HttpStatus> changeUser(@RequestBody UserDTO userDTO) {
-        User user = convertToUser(userDTO);
-        userService.saveUser(user);
+    @PatchMapping
+    public ResponseEntity<HttpStatus> update(@RequestBody UserDTO userDTO) {
+        userService.update(convertToUser(userDTO));
 
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @DeleteMapping
-    public ResponseEntity<HttpStatus> deleteUser(@RequestParam("username") String username) {
-        userService.deleteUser(username);
+    public ResponseEntity<HttpStatus> delete(@RequestParam("username") String username) {
+        userService.delete(username);
 
         return ResponseEntity.ok(HttpStatus.OK);
     }
