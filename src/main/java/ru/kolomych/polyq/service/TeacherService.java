@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kolomych.polyq.model.Teacher;
 import ru.kolomych.polyq.repository.TeacherRepository;
-import ru.kolomych.polyq.util.NotFoundException;
+import ru.kolomych.polyq.exception.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;

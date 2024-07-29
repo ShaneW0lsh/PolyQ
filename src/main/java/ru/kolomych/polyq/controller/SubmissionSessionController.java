@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/submission-sessions")
+@RequestMapping("/api/submission-session")
 public class SubmissionSessionController {
 
     private final SubmissionSessionService submissionSessionService;

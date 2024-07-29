@@ -8,8 +8,8 @@ import ru.kolomych.polyq.model.SubmissionSession;
 import ru.kolomych.polyq.model.Teacher;
 import ru.kolomych.polyq.repository.SubmissionSessionRepository;
 import ru.kolomych.polyq.repository.TeacherRepository;
-import ru.kolomych.polyq.util.BadRequestException;
-import ru.kolomych.polyq.util.NotFoundException;
+import ru.kolomych.polyq.exception.BadRequestException;
+import ru.kolomych.polyq.exception.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;

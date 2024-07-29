@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kolomych.polyq.model.Role;
 import ru.kolomych.polyq.repository.RoleRepository;
-import ru.kolomych.polyq.util.NotFoundException;
+import ru.kolomych.polyq.exception.NotFoundException;
 
 import java.util.List;
 

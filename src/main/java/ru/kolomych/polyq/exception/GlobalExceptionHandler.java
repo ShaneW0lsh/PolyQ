@@ -1,4 +1,4 @@
-package ru.kolomych.polyq.util;
+package ru.kolomych.polyq.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
