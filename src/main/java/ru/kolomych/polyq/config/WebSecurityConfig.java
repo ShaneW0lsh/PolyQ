@@ -28,16 +28,20 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .anyRequest().authenticated()
-                )
-                .formLogin(form -> form
-                        .successHandler(successUserHandler)
-                        .permitAll()
-                )
-                .logout(LogoutConfigurer::permitAll);
+                        .anyRequest().permitAll()
+                );
+//        http
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/admin/**").hasRole("ADMIN")
+//                        .anyRequest().authenticated()
+//                )
+//                .formLogin(form -> form
+//                        .successHandler(successUserHandler)
+//                        .permitAll()
+//                )
+//                .logout(LogoutConfigurer::permitAll);
 
         return http.build();
     }
