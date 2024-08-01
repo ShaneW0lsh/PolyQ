@@ -18,6 +18,10 @@ import ru.kolomych.polyq.service.UserService;
 
 import java.util.List;
 
+/*
+    TODO: POST and PATCH mappings, as well as
+        deletes should also return DTO of the User
+*/
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
