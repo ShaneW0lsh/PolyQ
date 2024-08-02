@@ -46,9 +46,17 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void create(User user) {
         Optional<User> existingUser = userRepository.findByUsername(user.getUsername());
+
         existingUser.ifPresent(value -> {
             throw new BadRequestException(String.format("User with username %s already exists", value.getUsername()));
         });
+
+        // TODO extract this into a method, maybe util class or something
+        List<Role> existingRoles = new ArrayList<>();
+        for (Role role : user.getRoles())
+            existingRoles.add(roleService.getRoleByName(role.getName()));
+        user.setRoles(existingRoles);
+
         userRepository.save(user);
     }
 

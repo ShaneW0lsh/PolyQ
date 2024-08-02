@@ -7,6 +7,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
+// TODO don't send queueDTO, send it's id. for that we'll have to write mapper :(
 @Getter
 @Setter
 public class SubmissionSessionDTO {

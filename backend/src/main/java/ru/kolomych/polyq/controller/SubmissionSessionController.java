@@ -26,33 +26,35 @@ public class SubmissionSessionController {
     }
 
     @GetMapping("/all")
-    public List<SubmissionSessionDTO> getSubmissionSessions() {
+    public List<SubmissionSessionDTO> getMany() {
         return submissionSessionService.getSubmissionSessions().stream()
                 .map(this::convertToSubmissionSessionDTO).collect(Collectors.toList());
     }
 
     @GetMapping
-    public SubmissionSessionDTO getSubmissionSession(@RequestParam("id") Long id) {
+    public SubmissionSessionDTO get(@RequestParam("id") Long id) {
         return convertToSubmissionSessionDTO(submissionSessionService.getSubmissionSession(id));
     }
 
+    // TODO for queue there should be it's own controller, because queues can be big,
+    //  and it's bad to return the whole queue object, we should just return queue id in submissionSessionDto
 //    @GetMapping("/queue")
 
     @PostMapping
-    public List<QueueDTO> createSubmissionSession(@RequestBody SubmissionSessionDTO submissionSessionDTO) {
+    public List<QueueDTO> create(@RequestBody SubmissionSessionDTO submissionSessionDTO) {
         SubmissionSession submissionSession = submissionSessionService.createSubmissionSession(convertToSubmissionSession(submissionSessionDTO));
         return submissionSession.getQueues().stream().map(this::convertToQueueDTO).toList();
     }
 
     @PatchMapping
-    public ResponseEntity<HttpStatus> updateSubmissionSession(@RequestBody SubmissionSessionDTO submissionSessionDTO) {
+    public ResponseEntity<HttpStatus> update(@RequestBody SubmissionSessionDTO submissionSessionDTO) {
         submissionSessionService.updateSubmissionSession(convertToSubmissionSession(submissionSessionDTO));
 
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @DeleteMapping
-    public ResponseEntity<HttpStatus> deleteSubmissionSession(@RequestParam("id") Long id) {
+    public ResponseEntity<HttpStatus> delete(@RequestParam("id") Long id) {
         submissionSessionService.deleteSubmissionSession(id);
 
         return ResponseEntity.ok(HttpStatus.OK);
