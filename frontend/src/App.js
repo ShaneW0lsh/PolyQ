@@ -2,7 +2,8 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import AppNavBar from "./Components/AppNavBar";
-import SubmissionSessions from "./Components/SubmissionSessions";
+import HomePage from "./Components/HomePage";
+import SubmissionSessionPage from "./Components/SubmissionSessionPage";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
 
         <div className='content'>
           <Routes>
-            <Route path='/' element={<SubmissionSessions />} />
+            <Route exact path='/' element={<HomePage />} />
+            <Route path='/session/:id' element={<SubmissionSessionPage />} />
           </Routes>
         </div>
 
