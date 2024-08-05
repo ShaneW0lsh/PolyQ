@@ -1,4 +1,4 @@
-package ru.kolomych.polyq.dto;
+package ru.kolomych.polyq.deprecateddto;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;

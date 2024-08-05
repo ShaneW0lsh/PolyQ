@@ -1,4 +1,4 @@
-package ru.kolomych.polyq.dto;
+package ru.kolomych.polyq.deprecateddto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Getter;
