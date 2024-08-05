@@ -18,6 +18,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -28,6 +29,9 @@ class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private RoleService roleService;
 
     @InjectMocks
     private UserService userService;
@@ -69,7 +73,10 @@ class UserServiceTest {
     void testCreateUser_UserDoesNotExist() {
         User user = new User();
         user.setUsername("testUser");
+        Role role = new Role("ROLE_USER");
+        user.setRoles(List.of(role));
         when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.empty());
+        when(roleService.getRoleByName(anyString())).thenReturn(role);
 
         userService.create(user);
 

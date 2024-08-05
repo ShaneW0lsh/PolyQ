@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.kolomych.polyq.dto.UserDTO;
+import ru.kolomych.polyq.deprecateddto.UserDTO;
 import ru.kolomych.polyq.model.User;
 import ru.kolomych.polyq.service.UserService;
 
@@ -35,6 +35,7 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
+    // TODO user path variable instead
     @GetMapping("/all")
     public List<UserDTO> getAll() {
         return userService.findAll().stream().map(this::convertToUserDTO).toList();

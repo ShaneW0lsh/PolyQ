@@ -1,11 +1,12 @@
 package ru.kolomych.polyq.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.kolomych.polyq.dto.QueueDTO;
-import ru.kolomych.polyq.dto.SubmissionSessionDTO;
+import ru.kolomych.polyq.deprecateddto.QueueDTO;
+import ru.kolomych.polyq.deprecateddto.SubmissionSessionDTO;
 import ru.kolomych.polyq.model.Queue;
 import ru.kolomych.polyq.model.SubmissionSession;
 import ru.kolomych.polyq.service.SubmissionSessionService;
@@ -14,25 +15,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/submission-session")
 public class SubmissionSessionController {
 
     private final SubmissionSessionService submissionSessionService;
     private final ModelMapper modelMapper;
 
-    public SubmissionSessionController(SubmissionSessionService submissionSessionService, ModelMapper modelMapper) {
-        this.submissionSessionService = submissionSessionService;
-        this.modelMapper = modelMapper;
-    }
-
-    @GetMapping("/all")
+    @GetMapping
     public List<SubmissionSessionDTO> getMany() {
         return submissionSessionService.getSubmissionSessions().stream()
                 .map(this::convertToSubmissionSessionDTO).collect(Collectors.toList());
     }
 
-    @GetMapping
-    public SubmissionSessionDTO get(@RequestParam("id") Long id) {
+    @GetMapping("/{id}")
+    public SubmissionSessionDTO get(@PathVariable Long id) {
         return convertToSubmissionSessionDTO(submissionSessionService.getSubmissionSession(id));
     }
 
@@ -53,8 +50,8 @@ public class SubmissionSessionController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @DeleteMapping
-    public ResponseEntity<HttpStatus> delete(@RequestParam("id") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> delete(@PathVariable Long id) {
         submissionSessionService.deleteSubmissionSession(id);
 
         return ResponseEntity.ok(HttpStatus.OK);

@@ -87,6 +87,7 @@ public class SubmissionSessionService {
 
         Optional<SubmissionSession> existingSubmissionSession = submissionSessionRepository.findById(id);
 
+        // TODO rewrite this shit, like I did with User Patch
         existingSubmissionSession.ifPresentOrElse(
                 value -> {
                     if (submissionSession.getDiscipline() == null)
