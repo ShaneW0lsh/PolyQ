@@ -16,8 +16,8 @@ import java.util.Collection;
 
 @Getter
 @Setter
-@Table(name = "queue")
 @Entity
+@Table(name = "queue")
 public class Queue {
 
     @Id

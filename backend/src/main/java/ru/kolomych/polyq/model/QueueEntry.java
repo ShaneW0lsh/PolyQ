@@ -16,9 +16,10 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Table(name = "queue_entry")
 @Entity
+@Table(name = "queue_entry")
 public class QueueEntry {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
